@@ -16,8 +16,19 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import it.prova.triage.dto.UtenteDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "utente")
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Utente {
 
 	@Id
@@ -43,103 +54,8 @@ public class Utente {
 
 	@ManyToMany
 	@JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
+	@Builder.Default
 	private Set<Ruolo> ruoli = new HashSet<>(0);
-
-	public Utente() {
-	}
-
-	public Utente(String username, String password) {
-		super();
-		this.username = username;
-		this.password = password;
-	}
-
-	public Utente(String username, String password, String nome, String cognome, LocalDate dateCreated) {
-		this(username, password);
-		this.nome = nome;
-		this.cognome = cognome;
-		this.dateCreated = dateCreated;
-	}
-
-	public Utente(Long id, String username, String password, String nome, String cognome, String email,
-			LocalDate dateCreated, StatoUtente stato) {
-		this(username, password, nome, cognome, dateCreated);
-		this.id = id;
-		this.email = email;
-		this.stato = stato;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Set<Ruolo> getRuoli() {
-		return ruoli;
-	}
-
-	public void setRuoli(Set<Ruolo> ruoli) {
-		this.ruoli = ruoli;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCognome() {
-		return cognome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
-
-	public LocalDate getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(LocalDate dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public StatoUtente getStato() {
-		return stato;
-	}
-
-	public void setStato(StatoUtente stato) {
-		this.stato = stato;
-	}
-
-	public boolean isAdmin() {
-		for (Ruolo ruoloItem : ruoli) {
-			if (ruoloItem.getCodice().equals(Ruolo.ROLE_ADMIN))
-				return true;
-		}
-		return false;
-	}
 
 	public boolean isAttivo() {
 		return this.stato != null && this.stato.equals(StatoUtente.ATTIVO);
@@ -148,14 +64,5 @@ public class Utente {
 	public boolean isDisabilitato() {
 		return this.stato != null && this.stato.equals(StatoUtente.DISABILITATO);
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 }
 

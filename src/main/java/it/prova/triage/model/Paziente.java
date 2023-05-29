@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +36,9 @@ public class Paziente {
 	private String codiceFiscale;
 	@Column(name = "registrazione")
 	private LocalDate registrazione;
-	@Column(name = "statopaziente")
+	@Enumerated(EnumType.STRING)
 	private StatoPaziente statoPaziente;
+	@Column(name = "codiceDottore")
+	private String codiceDottore;
 	
 }
